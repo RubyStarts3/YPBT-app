@@ -43,20 +43,33 @@ describe 'Homepage' do
       video_info.img(src: '/like.png').visible?.must_equal true
     end
 
-    # it '(SAD) should alert user if incorrect URL given' do
-    #      # GIVEN: on the homepage
-    #      @browser.goto homepage
-    #
-    #      # WHEN: add an invalid group url
-    #      @browser.text_field(id: 'yt_video_url_input').set(SAD_VIDEO_URL)
-    #      @browser.button(id: 'search-form-submit').click
-    #
-    #
-    #      # THEN: danger flash notice should be seen
-    #      flash_notice = @browser.div(class: 'alert')
-    #      flash_notice.attribute_value('class').must_include 'danger'
-    #    end
+    it '(SAD) should alert user if incorrect URL given' do
+      # GIVEN: on the homepage
+      @browser.goto homepage
 
+      # WHEN: add an invalid group url
+      @browser.text_field(id: 'yt_video_url_input').set(SAD_VIDEO_URL)
+      @browser.button(id: 'search-form-submit').click
+
+
+      # THEN: danger flash notice should be seen
+      flash_notice = @browser.div(class: 'alert')
+      flash_notice.attribute_value('class').must_include 'danger'
+    end
+
+    it '(SAD) should alert user if incorrect URL given' do
+      # GIVEN: on the homepage
+      @browser.goto homepage
+
+      # WHEN: add an invalid group url
+      @browser.text_field(id: 'yt_video_url_input').set(INVALID_VIDEO_URL)
+      @browser.button(id: 'search-form-submit').click
+
+
+      # THEN: danger flash notice should be seen
+      error_message = @browser.h1.text
+      error_message.must_include 'Server Error'
+    end
   end
 
 
@@ -65,10 +78,9 @@ describe 'Homepage' do
       # GIVEN: on the homepage
       @browser.goto homepage
 
-      # WHEN: add a valid video_Url
+      # WHEN
       @browser.text_field(id: 'yt_video_url_input').set(HAPPY_VIDEO_URL)
-
-      @browser.button(id: 'search-form-submit').click 
+      @browser.button(id: 'search-form-submit').click
 
       # THEN
       Watir::Wait.until { @browser.iframe(id: 'ytplayer').visible?}
@@ -85,19 +97,22 @@ describe 'Homepage' do
       @browser.p.visible?.must_equal true
       @browser.p(class: 'collapse').visible?.must_equal false
       @browser.button(id: 'collapse').click
+      @browser.p(id: 'description-remain').visible?.must_equal true
     end
 
-    # it 'should can use tag-bar add pin' do
+    it 'should can use tag-bar dialog' do
       # GIVEN
-      # @browser.goto video_viewer_page(HAPPY_VIDEO_URL)
+      @browser.goto video_viewer_page(HAPPY_VIDEO_URL)
 
       # WHEN
-      # @browser.div(class: 'add-point').click
-      # Watir::Wait.until { @browser.div(class: 'popover-content').visible? }
+      @browser.div(class: 'add-point').click
 
       # THEN
-      # @browser.select_list(id: 'tag_type').select 'video'
-      # @browser.text_field(name: 'comment_text_display').set('111')
-    # end
+      @browser.div(class: 'popover-content').visible?.must_equal true
+      dialog = @browser.div(class: 'popover-content')
+      dialog.select_list(id: 'tag_type').select 'video'
+      dialog.textarea.set '123test'
+      dialog.button(onclick: 'submmit_form(event)').click
+    end
   end
 end
