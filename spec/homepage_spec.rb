@@ -83,7 +83,7 @@ describe 'Homepage' do
       @browser.button(id: 'search-form-submit').click
 
       # THEN
-      Watir::Wait.until { @browser.iframe(id: 'ytplayer').visible?}
+      Watir::Wait.until { @browser.iframe(id: 'ytplayer').visible? }
       @browser.div(class: 'tag-bar').visible?.must_equal true
       content = @browser.div(class: 'container content-container')
       content.h4.visible?.must_equal true
