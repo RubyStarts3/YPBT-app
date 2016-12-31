@@ -4,14 +4,7 @@
 class YouTagit < Sinatra::Base
   # Home page: show list of all Videos
   get '/?' do
-    result = GetPopVideos.call(params)
-
-    if result.success?
-      @videos_pop_view = result.value
-      slim :home_page
-    else
-      flash[:error] = result.value.message
-    end
+    slim :home_page
   end
 
   get '/video_viewer/?' do
@@ -41,4 +34,21 @@ class YouTagit < Sinatra::Base
     redirect '/'
   end
 =end
+
+  set(:probability) { |value| condition { rand <= value } }
+
+  get '/win_a_car/:number' do
+    unless params['number'].nil?
+      unless params['probability'].nil?
+        "You won! #{params['number']} and #{params['probability']}"
+      else
+        "You won! #{params['number']}"
+      end
+    end
+  end
+
+#  get '/win_a_car/?' do
+    #"Sorry, you lost. #{params['number']}"
+#    "Sorry, you lost."
+#  end
 end

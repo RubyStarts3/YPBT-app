@@ -1,25 +1,9 @@
 h3 Popular Videos
-.container-fluid.content-container.row
-  - @videos_pop_view.each do |video_pop_view|
-    .col-md-6.col-sm-3.video-padding
-      .container-fluid.row
-        .col-md-6.video-padding
-          a href = video_pop_view.video_viewer_url
-            img {
-              src = "#{video_pop_view.thumbnail_url}"
-              style = "max-width: 100%; max=height: 56%;"
-            }
-        .col-md-6
-          a href = video_pop_view.video_viewer_url title="#{video_pop_view.title}"
-            h4.video-title-leave-out #{video_pop_view.title}
-          a href = video_pop_view.yt_channel_url
-            p.channel-title-leave-out #{video_pop_view.channel_title}
-          .container-fluid.row
-            .col-md-6.nopadding
-              img src = "/view.png" height = 20
-              span
-                = video_pop_view.view_count
-            .col-md-6.nopadding
-              img src = "/like.png" height = 24
-              span
-                = video_pop_view.like_count
+.container-fluid.content-container id="pop-videos"
+  .progress.progress-striped.active style="margin-bottom:0; text-align:center;"
+    .span.progress-value.h6 style="margin-top:4px;" Loading... 0%
+    .progress-bar style=("width: 0%")
+
+script type="text/javascript" src="/home_page/js/youtube_controller.js"
+javascript:
+  load_pop_videos();

@@ -1,4 +1,16 @@
 class YouTagit < Sinatra::Base
+  get '/get_pop_videos/?' do
+    result = GetPopVideos.call(params)
+    
+    if result.success?
+      @videos_pop_view = result.value
+      slim :home_page_pop_videos_table, layout: false
+    else
+      flash[:error] = result.value.message
+      slim :flash_bar, layout: false
+    end
+  end
+
   get '/tag_bar/:video_id/?' do
     results = SearchTagBarPoints.call(params)
 

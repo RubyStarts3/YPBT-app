@@ -178,3 +178,23 @@ function load_tag_bar(video_id){
     }
   });
 };
+
+// load pop videos
+function load_pop_videos(){
+  var pop_videos = $('#pop-videos');
+  var loading_area = pop_videos.find('.progress');
+  var loading_value = loading_area.find('.progress-value');
+  var loading_bar = loading_area.find('.progress-bar');
+  $.ajax({
+    type: 'GET',
+    url: '/get_pop_videos',
+    success: function(pop_videos_table){
+      loading_value.text('Loading... ' + '100%');
+      loading_bar.attr("style", "width:100%");
+      setTimeout(function () {
+        loading_area.remove();
+        pop_videos.append(pop_videos_table);
+      }, 1000);
+    }
+  });
+};

@@ -1,6 +1,7 @@
 - if flash[:error]
-  div class="alert alert-danger"
+  div class="alert alert-danger" style="margin-bottom:0;"
     = flash[:error]
+  - flash[:error] = nil
 - if flash[:notice]
   div class="alert alert-success"
     = flash[:notice]
