@@ -9,7 +9,9 @@ class GetPopVideos
 
   register :get_pop_videos, lambda { |params|
     begin
-      results = HTTP.get("#{YouTagit.config.YPBT_API}/PopVideos/#{NUMBER}")
+      channel_id = params[:channel_id]
+      results = HTTP.get("#{YouTagit.config.YPBT_API}/PopVideos/#{NUMBER}?" +
+        "channel_id=#{channel_id}&api_key=#{YouTagit.config.YOUTUBE_API_KEY}")
       videos_pop_json = JSON.parse(results.body.to_s)
 
       videos_pop_view = videos_pop_json.map do |video_pop_json|

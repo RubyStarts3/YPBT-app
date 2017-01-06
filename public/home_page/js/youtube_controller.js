@@ -177,24 +177,50 @@ function load_tag_bar(video_id){
       $(".tag-point").hover(loadDetail);
     }
   });
-};
+}
 
-// load pop videos
 function load_pop_videos(){
-  var pop_videos = $('#pop-videos');
-  var loading_area = pop_videos.find('.progress');
-  var loading_value = loading_area.find('.progress-value');
-  var loading_bar = loading_area.find('.progress-bar');
+  console.log("puts anything.");
   $.ajax({
     type: 'GET',
     url: '/get_pop_videos',
     success: function(pop_videos_table){
-      loading_value.text('Loading... ' + '100%');
-      loading_bar.attr("style", "width:100%");
-      setTimeout(function () {
-        loading_area.remove();
-        pop_videos.append(pop_videos_table);
-      }, 1000);
+      var channel_id = $(pop_videos_table).siblings('input[name="channel-id"]').val();
+      var pop_video_number = $(pop_videos_table).siblings('.col-md-6.col-sm-3.video-padding').length;
+      console.log(channel_id);
+
+      var receive_count = 0;
+      update_progress(receive_count, pop_video_number, pop_videos_table);
+      
+      var client = new Faye.Client('/faye');
+      client.subscribe('/' + channel_id, function(message) {
+        receive_count = message['text'];;
+        update_progress(receive_count, pop_video_number, pop_videos_table);
+      });
     }
   });
-};
+}
+function update_progress(receive_count, pop_video_number, pop_videos_table){
+  var pop_videos = $('#pop-videos');
+  var symbol_block = $("#symbol");
+  var loading_area = pop_videos.find('.progress');
+  var loading_value = loading_area.find('.progress-value');
+  var loading_bar = loading_area.find('.progress-bar');
+
+  var progress_value = Math.round(receive_count/pop_video_number*100);
+  var original_value = parseInt(
+                       loading_value.text().split(' ')[1].split('%')[0]);
+  if (progress_value > original_value) {
+    console.log(receive_count + "," + pop_video_number);
+    loading_value.text('Loading... ' + progress_value + '%');
+    loading_bar.attr("style", "width:" + progress_value +"%");
+  }
+
+  if (progress_value == 100) {
+    setTimeout(function () {
+      symbol_block.remove();
+      loading_area.remove();
+      pop_videos.append(pop_videos_table);
+    }, 1000);
+  }
+}

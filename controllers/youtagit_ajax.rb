@@ -1,9 +1,12 @@
 class YouTagit < Sinatra::Base
   get '/get_pop_videos/?' do
+    channel_id = (headers.to_s + rand(1000000).to_s).hash
+    params[:channel_id] = channel_id
     result = GetPopVideos.call(params)
-    
+
     if result.success?
       @videos_pop_view = result.value
+      @channel_id = channel_id
       slim :home_page_pop_videos_table, layout: false
     else
       flash[:error] = result.value.message

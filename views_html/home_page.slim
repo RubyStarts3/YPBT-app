@@ -1,9 +1,12 @@
 h3 Popular Videos
 .container-fluid.content-container id="pop-videos"
+  p style="text-align:center; margin: 50px 0px;" id="symbol"
+    image src="/symbol.png" style="width:60%;" align="middle"
   .progress.progress-striped.active style="margin-bottom:0; text-align:center;"
     .span.progress-value.h6 style="margin-top:4px;" Loading... 0%
     .progress-bar style=("width: 0%")
 
+script src="/faye/faye.js"
 script type="text/javascript" src="/home_page/js/youtube_controller.js"
 javascript:
   load_pop_videos();
