@@ -185,6 +185,9 @@ function load_pop_videos(){
     type: 'GET',
     url: '/get_pop_videos',
     success: function(pop_videos_table){
+      var pop_videos = $('#pop-videos');
+      pop_videos.append(pop_videos_table);
+
       var channel_id = $(pop_videos_table).siblings('input[name="channel-id"]').val();
       var pop_video_number = $(pop_videos_table).siblings('.col-md-6.col-sm-3.video-padding').length;
       console.log(channel_id);
@@ -220,7 +223,7 @@ function update_progress(receive_count, pop_video_number, pop_videos_table){
     setTimeout(function () {
       symbol_block.remove();
       loading_area.remove();
-      pop_videos.append(pop_videos_table);
+      pop_videos.find("*").show();
     }, 1000);
   }
 }

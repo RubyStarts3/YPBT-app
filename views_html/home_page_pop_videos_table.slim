@@ -1,6 +1,6 @@
 input name="channel-id" type="hidden" value="#{@channel_id}"
 - @videos_pop_view.each do |video_pop_view|
-  .col-md-6.col-sm-3.video-padding
+  .col-md-6.col-sm-3.video-padding style="display:none;"
     .container-fluid.row
       .col-md-6.video-padding
         a href = video_pop_view.video_viewer_url
