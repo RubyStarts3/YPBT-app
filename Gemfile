@@ -11,6 +11,7 @@ gem 'slim'
 gem 'rack-flash3'
 gem 'ruby-duration'
 gem 'http'
+gem 'faye', '= 1.1.2'
 
 gem 'roar'
 gem 'multi_json'

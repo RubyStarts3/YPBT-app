@@ -175,6 +175,14 @@ function load_tag_bar(video_id){
       loading_tag.remove();
       tag_bar.append(tag_bar_loaded);
       $(".tag-point").hover(loadDetail);
+      websocket_subscribe(video_id);
     }
   });
 };
+function websocket_subscribe(video_id) {
+  var client = new Faye.Client('/faye');
+  client.subscribe('/' + video_id, function(message) {
+    timetag_info = message['text'];
+    console.log(timetag_info);
+  });
+}
