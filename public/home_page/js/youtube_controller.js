@@ -63,13 +63,13 @@ function setPlayPoint(e){
   var videoDuration = player.getDuration();
   var playSecond = videoDuration * playPercentage;
   player.seekTo(playSecond);
-  console.log('setPlayPoint');
   return false;
 }
 
 // get tag detail when mouseenter
 function loadDetail(){
  var tag = $(this);
+ tag.removeClass('new-point');
  tag.off( "mouseenter mouseleave" );
  var id =tag.attr('id');
  var popotion = { container: 'body',
@@ -196,7 +196,7 @@ function render_new_tag_point(data){
     var current_points_id = $.map(current_points,function(e){return e.id;});
     if ($.inArray(data['time_tag_id'],current_points_id) == -1){
         var tag_bar = $('.tag-bar');
-        var new_point = $('<div class="tag-point" >');
+        var new_point = $('<div class="tag-point new-point" >');
         new_point.css('left',"calc("+data['start_time_percentage']*100+"% - 8px)");
         new_point.css('background-color','rgb(255,160,160)');
         new_point.attr('onclick',"event.stopPropagation(); seekTo("+data['start_time']+");click_tag(this);")

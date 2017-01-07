@@ -208,3 +208,20 @@ img.like_count:hover
   overflow: hidden;
   white-space: nowrap;
 }
+
+@keyframes new-point{
+    0%   {top:0px;}
+    25%  {top:3px;}
+    50%  {top:0px;}
+    75%  {top:-3px;}
+    100%  {top:0px;}
+}
+.new-point{
+    background-color: #00A1F1 !important;
+    -webkit-animation-name: new-point ;
+    animation-name: new-point;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
