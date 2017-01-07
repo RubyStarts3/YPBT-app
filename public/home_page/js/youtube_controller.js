@@ -170,7 +170,7 @@ function ajax_add_new_tag(params){
       url: '/add_new_time_tag',
       data: params,
       success: function(new_tag_point){
-        tag_bar.append($(new_tag_point).hover(loadDetail));
+        // tag_bar.append($(new_tag_point).hover(loadDetail));
       }
     });
 }
@@ -194,6 +194,7 @@ function load_tag_bar(video_id){
 function render_new_tag_point(data){
     var current_points = $('.tag-point');
     var current_points_id = $.map(current_points,function(e){return e.id;});
+
     if ($.inArray(data['time_tag_id'],current_points_id) == -1){
         var tag_bar = $('.tag-bar');
         var new_point = $('<div class="tag-point new-point" >');
@@ -210,7 +211,6 @@ function websocket_subscribe(video_id) {
   var tag_bar = $('.tag-bar');
   client.subscribe('/' + video_id, function(message) {
     timetag_info = message['text'];
-    console.log(timetag_info);
     var data = JSON.parse(timetag_info);
     render_new_tag_point(data);
   });
