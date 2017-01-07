@@ -167,7 +167,7 @@ function ajax_add_new_tag(params){
     var tag_bar = $('.tag-bar');
     $.ajax({
       type: 'POST',
-      url: 'add_new_time_tag',
+      url: '/add_new_time_tag',
       data: params,
       success: function(new_tag_point){
         tag_bar.append($(new_tag_point).hover(loadDetail));
@@ -191,12 +191,17 @@ function load_tag_bar(video_id){
   });
 };
 
-function render_new_tag_point(tag_point_html){
-    var tag_bar = $('.tag-bar');
-    var new_point = $(tag_point_html);
+function render_new_tag_point(data){
     var current_points = $('.tag-point');
     var current_points_id = $.map(current_points,function(e){return e.id;});
-    if ($.inArray(new_point.attr('id'),current_points_id) == -1){
+    if ($.inArray(data['time_tag_id'],current_points_id) == -1){
+        var tag_bar = $('.tag-bar');
+        var new_point = $("div");
+        new_point.css('left',"calc("+data['start_time_percentage']*100+"% - 8px)");
+        new_point.css('background-color','rgb(255,160,160)');
+        new_point.attr('onclick',"event.stopPropagation(); seekTo("+data['start_time']+");click_tag(this);")
+        new_point.attr('id',data['time_tag_id']);
+        new_point.attr('data-container','body');
         tag_bar.append(new_point.hover(loadDetail));
     }
 }
@@ -206,6 +211,7 @@ function websocket_subscribe(video_id) {
   client.subscribe('/' + video_id, function(message) {
     timetag_info = message['text'];
     console.log(timetag_info);
-    render_new_tag_point(timetag_info);
+    var data = JSON.parse(timetag_info);
+    render_new_tag_point(data);
   });
 }
