@@ -3,7 +3,7 @@
   .tag-point {
     style = "left:calc(#{tag.start_time_percentage*100}% - 8px);\
              background-color:rgb(255,#{tag.like_color},#{tag.like_color})"
-    onclick = "event.stopPropagation(); seekTo(#{tag.start_time});"
+    onclick = "event.stopPropagation(); seekTo(#{tag.start_time});click_tag(this);"
     id= "#{tag.time_tag_id}"
     data-container = "body"
   }

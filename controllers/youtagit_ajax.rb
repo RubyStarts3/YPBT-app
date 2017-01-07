@@ -39,4 +39,13 @@ class YouTagit < Sinatra::Base
       ErrorRepresenter.new(results.value).to_status_response
     end
   end
+
+  put '/timetag_add_one_click/?' do
+    results = TimetagAddOneClick.call(params)
+    if results.success?
+      results.value
+    else
+      ErrorRepresenter.new(results.value).to_status_response
+    end
+  end
 end

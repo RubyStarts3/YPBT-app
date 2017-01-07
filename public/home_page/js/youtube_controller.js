@@ -111,7 +111,18 @@ function like_tag(like){
     }
     return false;
 }
+function ajax_click_tag(id){
+    $.ajax({
+      type: 'PUT',
+      url: '/timetag_add_one_click',
+      data: { 'time_tag_id': id },
+    });
+}
 
+function click_tag(tag){
+    var tag_id = $(tag).attr('id');
+    ajax_click_tag(tag_id);
+}
 function get_add_form(){
     var crrent_time = player.getCurrentTime();
     player.pauseVideo();
