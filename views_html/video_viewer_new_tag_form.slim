@@ -1,6 +1,7 @@
 form.add-tag-form id="new_tag_form"
   input.hidden name="start_time" type="number"
   input.hidden name="video_id" type="text" value="#{@whole_info.video_info.video_id}"
+  input.hidden name="publish" type="text" value="true"
   .form-group
     label for="tag_type"
       = "Type"
