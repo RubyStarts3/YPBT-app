@@ -190,10 +190,22 @@ function load_tag_bar(video_id){
     }
   });
 };
+
+function render_new_tag_point(tag_point_html){
+    var tag_bar = $('.tag-bar');
+    var new_point = $(tag_point_html);
+    var current_points = $('.tag-point');
+    var current_points_id = $.map(current_points,function(e){return e.id;});
+    if ($.inArray(new_point.attr('id'),current_points_id) == -1){
+        tag_bar.append(new_point.hover(loadDetail));
+    }
+}
 function websocket_subscribe(video_id) {
   var client = new Faye.Client('/faye');
+  var tag_bar = $('.tag-bar');
   client.subscribe('/' + video_id, function(message) {
     timetag_info = message['text'];
     console.log(timetag_info);
+    render_new_tag_point(timetag_info);
   });
 }
