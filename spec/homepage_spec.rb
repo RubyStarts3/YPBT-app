@@ -33,9 +33,14 @@ describe 'Homepage' do
       # GIVEN
       @browser.goto homepage
 
+      # WHEN: pop_videos_table present and visible
+      video_container = @browser.div(class: 'container-fluid content-container')
+      Watir::Wait.until(timeout = 60) { video_container.div(class: 'col-md-6 col-sm-3 video-padding').present? }
+      Watir::Wait.until(timeout = 60) { video_container.div(class: 'col-md-6 col-sm-3 video-padding').visible? }
+
       # THEN
       @browser.h3.text.must_include 'Popular Videos'
-      @browser.div(class: 'container-fluid content-container row').visible?.must_equal true
+      @browser.div(class: 'container-fluid content-container').visible?.must_equal true
       @browser.h4(class: 'video-title-leave-out').visible?.must_equal true
       @browser.p(class: 'channel-title-leave-out').visible?.must_equal true
       video_info = @browser.div(class: 'container-fluid row')
