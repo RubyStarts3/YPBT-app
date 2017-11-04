@@ -10,6 +10,12 @@ require 'page-object'
 require 'rack/test'
 require 'rspec/retry'
 
+# --
+# Refer to "https://github.com/NoRedInk/rspec-retry/issues/79"
+# [NameError: uninitialized constant Net Did you mean? Set #79]
+require 'net/http'
+# --
+
 require './init.rb'
 
 include Rack::Test::Methods
@@ -44,6 +50,9 @@ end
 RSpec.configure do |config|
   #show retry status in spec process
   config.verbose_retry = true
+  # show exception that triggers a retry if verbose_retry is set to true
+  #config.display_try_failure_messages = true
+  #config.clear_lets_on_failure = true
   # Try twice (retry once)
   config.default_retry_count = 5
   # Only retry when Selenium raises Net::ReadTimeout
