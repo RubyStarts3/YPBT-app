@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
-ruby '2.3.1'
 
-gem 'puma'
+ruby '2.6.6'
+
+gem 'puma', ">= 3.12.4"
 gem 'sinatra'
 gem 'json'
 gem 'econfig'
@@ -30,9 +31,9 @@ group :test do
   gem 'minitest'
   gem 'minitest-rg'
   gem 'rack-test'
-  gem 'watir', '~> 6.0'
+  gem 'watir', '~> 6.17'
   gem 'headless'
-  gem 'page-object'
+  gem 'page-object', '~> 2.2', '>= 2.2.6'
   gem 'rspec-retry', '~> 0.4.5'
 end
 
