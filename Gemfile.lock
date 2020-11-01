@@ -120,7 +120,7 @@ GEM
     public_suffix (2.0.4)
     puma (5.0.4)
       nio4r (~> 2.0)
-    rack (1.6.5)
+    rack (1.6.13)
     rack-flash3 (1.0.5)
       rack
     rack-protection (1.5.3)
